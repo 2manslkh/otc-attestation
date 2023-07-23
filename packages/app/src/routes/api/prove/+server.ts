@@ -7,8 +7,6 @@ export const POST: RequestHandler = async (event) => {
   // Parse the request body as JSON
   // const body = await json(request);
   const body = await event.request.json();
-  console.log("🚀 | constPOST:RequestHandler= | body:", body)
-
 
   // const response = await fetch("https://jsonplaceholder.typicode.com/photos/1");
   // const photos = await response.json();
@@ -35,7 +33,6 @@ export const POST: RequestHandler = async (event) => {
   }
 
   let verification = await verifyResponse(body);
-  console.log("🚀 | constPOST:RequestHandler= | verification:", verification)
 
   return json({ "isVerified": verification ? true : false });
 };

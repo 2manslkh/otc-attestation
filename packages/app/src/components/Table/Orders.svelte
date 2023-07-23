@@ -20,12 +20,12 @@
   const eas = new EAS(EASContractAddress);
 
   type Order = {
-    assetAAmount: number;
+    assetAAmount: string;
     assetAType: string;
-    assetBAmount: number;
+    assetBAmount: string;
     assetBType: string;
-    longitude: number;
-    latitude: number;
+    longitude: string;
+    latitude: string;
     timestamp: number;
     proof?: string;
   };
@@ -33,21 +33,21 @@
   // Sample orders data (replace this with your actual data)
   const orders = [
     {
-      assetAAmount: 1,
+      assetAAmount: "1",
       assetAType: "BTC",
-      assetBAmount: 42069,
+      assetBAmount: "42069",
       assetBType: "EUR",
-      longitude: 48.869135152711614,
-      latitude: 2.341314433508059,
+      longitude: "48.869135152711614",
+      latitude: "2.341314433508059",
       timestamp: 1679814496, // Replace with actual Unix timestamp
     },
     {
-      assetAAmount: 5000,
+      assetAAmount: "5000",
       assetAType: "USDT",
-      assetBAmount: 5000,
+      assetBAmount: "5000",
       assetBType: "EUR",
-      longitude: 48.89036242982921,
-      latitude: 2.3551452797698107,
+      longitude: "48.89036242982921",
+      latitude: "2.3551452797698107",
       timestamp: 1679822200, // Replace with actual Unix timestamp
     },
     // Add more orders as needed
@@ -144,6 +144,7 @@
   }
 
   onMount(async () => {
+    // @ts-ignore
     const provider = new providers.Web3Provider(window.ethereum);
     const [address] = await provider.listAccounts();
     signer = provider.getSigner(address);
@@ -171,7 +172,9 @@
         <td>{order.assetAType}</td>
         <td>{order.assetBAmount}</td>
         <td>{order.assetBType}</td>
-        <td><a href={getGoogleMapsLink(order.longitude, order.latitude)}>Link</a></td>
+        <td
+          ><a href={getGoogleMapsLink(Number(order.longitude), Number(order.latitude))}>Link</a></td
+        >
         <td>{formatTimestamp(order.timestamp)}</td>
         <td><Button buttonText="Attest" handleClick={() => handleAttest(order)} /></td>
       </tr>
