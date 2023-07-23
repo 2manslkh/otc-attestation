@@ -12,6 +12,8 @@
     assetBAmount,
     assetAType,
     assetBType,
+    orders,
+    type Order,
   } from "../../stores";
 
   import NumberInput from "../../components/Input/NumberInput.svelte";
@@ -115,7 +117,38 @@
       console.error("Error posting data:", error);
     }
   }
-  async function handleCreateOrder() {}
+  function handleLocation() {
+    const successCallback = (position: any) => {
+      console.log(position);
+      return { longitude: position.coords.longitude, latitude: position.coords.latitude };
+    };
+
+    const errorCallback = (error: any) => {
+      console.log(error);
+    };
+
+    let result = navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+  }
+
+  async function handleCreateOrder() {
+    console.log("ASd");
+    let location = handleLocation();
+
+    console.log("🚀 | handleCreateOrder | location:", location);
+
+    let newOrder: Order = {
+      assetAAmount: $assetAAmount,
+      assetAType: $assetAType,
+      assetBAmount: $assetBAmount,
+      assetBType: $assetBType,
+      longitude: "2.3413998740919526",
+      latitude: "48.868865890558624",
+      attestationScore: "33",
+      timestamp: 1679814496, // Replace with actual Unix timestamp
+    };
+
+    $orders.push(newOrder);
+  }
 
   onMount(() => {
     // client = createWalletClient({

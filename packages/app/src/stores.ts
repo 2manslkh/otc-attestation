@@ -20,7 +20,7 @@ export const assetBType = writable<string>("");
 export const assetAAmount = writable<string>("");
 export const assetBAmount = writable<string>("");
 
-type Order = {
+export type Order = {
     assetAAmount: string;
     assetAType: string;
     assetBAmount: string;
