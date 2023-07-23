@@ -5,6 +5,7 @@
   import LandingPageInfo from "../components/Display/LandingPageInfo.svelte";
   import LeverageIcon from "../public/images/trust.jpeg";
   import OptimisedIcon from "../public/images/proximity.jpeg";
+  import FairIcon from "../public/images/Fair.jpeg";
 </script>
 
 <VerticalStack>
@@ -24,6 +25,16 @@
       title: "Effortless Proximity Trading",
       description:
         "Connect with OTC trading partners in your local area effortlessly. Our protocol allows you to find trustworthy traders near you, making it easier than ever to establish face-to-face connections. Experience the convenience of proximity trading and explore exciting opportunities right within your neighborhood.",
+    }}
+  />
+  <LandingPageInfo
+    landingPageInfo={{
+      src: FairIcon,
+      title: "Fair Scoring System",
+      description: `The attestation score is a key feature of the COAP protocol.
+         It is a measure of the trustworthiness of a trader. The higher the score, the more trustworthy the trader. This scoring system ensures that you can trade with confidence, knowing that your trading partner is reliable and credible.
+         \n\nCurrently the formula can be found here:
+         `,
     }}
   />
 </VerticalStack>

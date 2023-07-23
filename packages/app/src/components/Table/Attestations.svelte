@@ -38,6 +38,11 @@
     // Add more data rows as needed
   ];
 
+  function getGoogleMapsLink(latitude: number, longitude: number): string {
+    const link = `https://www.google.com/maps?q=${latitude},${longitude}`;
+    return link;
+  }
+
   onMount(async () => {
     $attestations = (await getAttestations("0xA63dDdB69E6e470Bf3d236B434EF80a213B998A7"))?.data
       .attestations;
@@ -63,12 +68,18 @@
       {#each $attestations as row}
         <tr>
           <td>{row.attester}</td>
-          <td>{row.decodedDataJson}</td>
-          <!-- <td>{JSON.parse(row.decodedJsonData).assetAType}</td>
-          <td>{JSON.parse(row.decodedJsonData).assetBNumber}</td>
-          <td>{JSON.parse(row.decodedJsonData).assetBType}</td>
-          <td>{JSON.parse(row.decodedJsonData).longitude}</td>
-          <td>{JSON.parse(row.decodedJsonData).latitude}</td> -->
+          <td>{JSON.parse(row.decodedDataJson)[0].value.value}</td>
+          <td>{JSON.parse(row.decodedDataJson)[1].value.value}</td>
+          <td>{JSON.parse(row.decodedDataJson)[2].value.value}</td>
+          <td>{JSON.parse(row.decodedDataJson)[3].value.value}</td>
+          <td
+            ><a
+              href={getGoogleMapsLink(
+                Number(JSON.parse(row.decodedDataJson)[4].value.value),
+                Number(JSON.parse(row.decodedDataJson)[4].value.value)
+              )}>Link</a
+            >
+          </td>
         </tr>
       {/each}
     {/if}
