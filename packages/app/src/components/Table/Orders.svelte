@@ -20,6 +20,12 @@
   // Initialize the sdk with the address of the EAS Schema contract address
   const eas = new EAS(EASContractAddress);
 
+  let _orders: Order[] = [];
+
+  orders.subscribe((value) => {
+    _orders = value;
+  });
+
   type Order = {
     assetAAmount: string;
     assetAType: string;
@@ -172,7 +178,7 @@
     </tr>
   </thead>
   <tbody>
-    {#each $orders as order}
+    {#each _orders as order}
       <tr>
         <td>{order.assetAAmount}</td>
         <td>{order.assetAType}</td>
