@@ -18,6 +18,11 @@
 </div>
 
 <style lang="scss">
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
   logo-container {
     /* Frame 111 */
 
@@ -35,10 +40,10 @@
     width: 240px;
     height: 240px;
 
-    background: rgba(196, 78, 197, 0.5);
+    background: rgba(255, 255, 255, 0.9);
     border-width: 0px 8px 8px 0px;
     border-style: solid;
-    border-color: rgba(63, 15, 63, 0.5);
+    border-color: rgba(0, 0, 0, 0.5);
     border-radius: 16px;
 
     /* Inside auto layout */
@@ -52,27 +57,30 @@
     font-family: "Poppins";
     font-style: normal;
     font-weight: 700;
-    font-size: 48px;
+    font-size: 3rem;
     line-height: 72px;
     /* identical to box height */
+
+    word-break: normal;
 
     display: flex;
     align-items: center;
 
-    color: #ffffff;
+    color: #000000;
   }
 
   description {
     font-family: "Poppins";
     font-style: normal;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 1rem;
     line-height: 36px;
     display: flex;
     align-items: flex-start;
     text-align: left;
+    word-break: normal;
 
-    color: #ffffff;
+    color: #000000;
   }
 
   .horizontal-container {
@@ -88,6 +96,6 @@
     flex-direction: row;
     justify-content: start;
     align-items: start;
-    gap: 10px;
+    gap: 3rem;
   }
 </style>

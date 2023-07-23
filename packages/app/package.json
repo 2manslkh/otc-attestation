@@ -42,6 +42,7 @@
 		"@fontsource/poppins": "^5.0.1",
 		"@picocss/pico": "^1.5.10",
 		"@sismo-core/sismo-connect-client": "^0.0.20",
+		"@sismo-core/sismo-connect-server": "^0.0.20",
 		"@types/pako": "^2.0.0",
 		"@vitejs/plugin-basic-ssl": "^1.0.1",
 		"@wagmi/cli": "^1.0.2",

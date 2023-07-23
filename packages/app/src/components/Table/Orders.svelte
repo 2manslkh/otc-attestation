@@ -1,5 +1,34 @@
 <script lang="ts">
+  import { getConfig } from "@wagmi/core";
   import Button from "../Button/Button.svelte";
+
+  import { providers } from "ethers";
+
+  let signer: Signer;
+
+  import {
+    EAS,
+    Offchain,
+    SchemaEncoder,
+    SchemaRegistry,
+  } from "@ethereum-attestation-service/eas-sdk";
+  import type { Signer } from "ethers";
+  import { onMount } from "svelte";
+  const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e"; // Sepolia v0.26
+
+  // Initialize the sdk with the address of the EAS Schema contract address
+  const eas = new EAS(EASContractAddress);
+
+  type Order = {
+    assetAAmount: number;
+    assetAType: string;
+    assetBAmount: number;
+    assetBType: string;
+    longitude: number;
+    latitude: number;
+    timestamp: number;
+    proof?: string;
+  };
 
   // Sample orders data (replace this with your actual data)
   const orders = [
@@ -11,8 +40,6 @@
       longitude: 48.869135152711614,
       latitude: 2.341314433508059,
       timestamp: 1679814496, // Replace with actual Unix timestamp
-      proof:
-        "H4sIAAAAAAAAA8VVu25cRwz9l62lgJwZcoYqjTSp7VSBC77GXmD1gFYWLBj693ABJQiSIoUC5DZ3djkkD8lzeH8c9OHhlzjcHOA7ttzcByDwahO1L8voDcRGtIw4XB3u9DbPD-pZDufj-fb-OuP4dLy_K9tzPp4vpz8sfn93l_50_Yw_YZkfHu_v9_lw89uPg5_0ePuX46eXhwoIV4cvj_ff_kTjkYzCHOm2GCB2wBxi0SdubIe365-OBelJbx_K66RPdb5g0dO3Col0dcjvT4_6sz5p2ctyPH_MU8FSO-WHl1_P-Xi42Xo65-vnN4xvdy_9gG7S2pgiu3VxH2MNGebQBqyWuoSQQCB9Krs6d1iFVxMhAgBXJ_MA7-QNp6zRkDuH2KZBEWt6BaOkobxclWcstdEulhgdEwxai9b7SBNO024MpNIE1JVx-NLRZ86QMQPCBzRaW5kHB6Kt1sTERwBJ1jthGyjVHaasEGNoH2vN9MJqvYuuShJ4-TUEMJEqxlgkPHYsc5wjOiHKiqDWp2uzGo-sqmeLiOUkaCm6oyaWwyR47crW9shlhG22yd5EfHXr2ndjqXJXAyzQ2Vpf0aijNUXc3IqKXP_CWNo5Ze8B2V2m98QRMahGwtu0YIVVx7EZtQVV1xzlhla9Xx3Ll6g6JWk9QptSUFWKc4NuzsiGNQQjRhfuE3qFqgL-52du9oLU0mjKXGvMNZeUHtyAfUMa8spBM1NrXLonjeKr9CozirkwgS-so5oNZIj0vUJ9waTtSH3NvrTRBpdWBgHyUlkNGhfLVrTMRZVwyCVtWHDFlCjaTcfq886iWXEqdbsUH8wQc0AtEW5UG2TuKUVtLB3bRR2DJ5UMtpqLJlm5llSwrFgC2_WadZIKQVySwwJVVAow8tKNc4LrJlzDW_FMi2cdkbCPGuaobBLWxRh19r78vd3f_7aB2Ln0wDSLa__FuP_-IJYyYa4NHSmmse4urXbBIgoXnN3bLF7bADerri656Ci8Q_IucpQ6Qgemo5JMDs2JsPe02jHVIq2adq0ikepuiZnI5y4eNQkvqcV74b-3_sM_lnft5-fj3ZeP_jVvL5-gry_xqNfnXh-Y18-vvwMItjnAzAYAAA",
     },
     {
       assetAAmount: 5000,
@@ -36,6 +63,92 @@
     const date = new Date(unixTimestamp * 1000); // Convert Unix timestamp to milliseconds
     return date.toLocaleString(); // Format date to human-readable string
   }
+
+  async function handleLocation() {
+    const successCallback = (position: any) => {
+      console.log(position);
+    };
+
+    const errorCallback = (error: any) => {
+      console.log(error);
+    };
+
+    let result = navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    console.log("🚀 | handleLocation | result:", result);
+  }
+
+  async function getSchema() {
+    eas.connect(signer);
+
+    const schemaRegistryContractAddress = "0x0a7E2Ff54e76B8E6659aedc9103FB21c038050D0"; // Sepolia 0.26
+    const schemaRegistry = new SchemaRegistry(schemaRegistryContractAddress);
+    schemaRegistry.connect(signer);
+
+    const schemaUID = "0x2fc0e929c1ec681c003c858c7a874cbccc3db5bad965a3e5df86a2916d762f26";
+
+    const schemaRecord = await schemaRegistry.getSchema({ uid: schemaUID });
+    return schemaRecord;
+  }
+
+  async function handleAttest(order: Order) {
+    eas.connect(signer);
+
+    const schemaEncoder = new SchemaEncoder((await getSchema()).schema);
+    const encodedData = schemaEncoder.encodeData([
+      { name: "asset_a_amount", value: order.assetAAmount, type: "string" },
+      { name: "asset_a_type", value: order.assetAType, type: "string" },
+      { name: "asset_b_amount", value: order.assetBAmount, type: "string" },
+      { name: "asset_b_type", value: order.assetBType, type: "string" },
+      { name: "longitude", value: order.longitude, type: "string" },
+      { name: "latitude", value: order.latitude, type: "string" },
+      { name: "timestamp", value: order.timestamp, type: "uint32" },
+    ]);
+
+    // OFFCHAIN
+
+    // const offchain = await eas.getOffchain();
+
+    // const offchainAttestation = await offchain.signOffchainAttestation(
+    //   {
+    //     recipient: "0xFD50b031E778fAb33DfD2Fc3Ca66a1EeF0652165",
+    //     // Unix timestamp of when attestation expires. (0 for no expiration)
+    //     expirationTime: 0,
+    //     // Unix timestamp of current time
+    //     time: 1671219636,
+    //     revocable: true,
+    //     version: 1,
+    //     nonce: 0,
+    //     schema: "0xb16fa048b0d597f5a821747eba64efa4762ee5143e9a80600d0005386edfc995",
+    //     refUID: "0x0000000000000000000000000000000000000000000000000000000000000000",
+    //     data: encodedData,
+    //   },
+    //   signer
+    // );
+
+    // ONCHAIN
+    const schemaUID = "0x2fc0e929c1ec681c003c858c7a874cbccc3db5bad965a3e5df86a2916d762f26";
+
+    const tx = await eas.attest({
+      schema: schemaUID,
+      data: {
+        recipient: "0xA63dDdB69E6e470Bf3d236B434EF80a213B998A7",
+        expirationTime: 0,
+        revocable: false,
+        data: encodedData,
+      },
+    });
+
+    const newAttestationUID = await tx.wait();
+
+    console.log("New attestation UID:", newAttestationUID);
+  }
+
+  onMount(async () => {
+    const provider = new providers.Web3Provider(window.ethereum);
+    const [address] = await provider.listAccounts();
+    signer = provider.getSigner(address);
+    console.log("🚀 | onMount | signer:", signer);
+  });
 </script>
 
 <!-- Table displaying orders data -->
@@ -60,7 +173,7 @@
         <td>{order.assetBType}</td>
         <td><a href={getGoogleMapsLink(order.longitude, order.latitude)}>Link</a></td>
         <td>{formatTimestamp(order.timestamp)}</td>
-        <td><Button buttonText="Attest" /></td>
+        <td><Button buttonText="Attest" handleClick={() => handleAttest(order)} /></td>
       </tr>
     {/each}
   </tbody>
