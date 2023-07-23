@@ -27,6 +27,7 @@
     longitude: string;
     latitude: string;
     timestamp: number;
+    attestationScore?: number;
     proof?: string;
   };
 
@@ -39,6 +40,7 @@
       assetBType: "EUR",
       longitude: "48.869135152711614",
       latitude: "2.341314433508059",
+      attestationScore: "25",
       timestamp: 1679814496, // Replace with actual Unix timestamp
     },
     {
@@ -48,6 +50,7 @@
       assetBType: "EUR",
       longitude: "48.89036242982921",
       latitude: "2.3551452797698107",
+      attestationScore: "25",
       timestamp: 1679822200, // Replace with actual Unix timestamp
     },
     // Add more orders as needed
@@ -162,6 +165,7 @@
       <th>Asset B Type</th>
       <th>Map Link</th>
       <th>Timestamp</th>
+      <th>Attestation Score</th>
       <th>Attest</th>
     </tr>
   </thead>
@@ -176,6 +180,7 @@
           ><a href={getGoogleMapsLink(Number(order.longitude), Number(order.latitude))}>Link</a></td
         >
         <td>{formatTimestamp(order.timestamp)}</td>
+        <td>{order.attestationScore}</td>
         <td><Button buttonText="Attest" handleClick={() => handleAttest(order)} /></td>
       </tr>
     {/each}

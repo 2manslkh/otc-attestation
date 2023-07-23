@@ -129,8 +129,8 @@
 
 <VerticalStack>
   <Button buttonText="Sign In with SISMO" handleClick={handleSignInWithSismo} />
-  <Button buttonText="Sign In with EAS" handleClick={handleSignInWithEAS} />
-  <Button buttonText="Verify SISMO Proof" handleClick={handleVerifySismoProof} />
+  <!-- <Button buttonText="Sign In with EAS" handleClick={handleSignInWithEAS} />
+  <Button buttonText="Verify SISMO Proof" handleClick={handleVerifySismoProof} /> -->
   <div>
     <div>
       Asset A
@@ -153,7 +153,7 @@
 
   <br />
   Attestation Score
-  <AttestationScore score="88" />
+  <AttestationScore score="35" />
 </VerticalStack>
 
 <style lang="scss">
