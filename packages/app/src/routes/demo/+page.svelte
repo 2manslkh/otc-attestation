@@ -141,13 +141,15 @@
       assetAType: $assetAType,
       assetBAmount: $assetBAmount,
       assetBType: $assetBType,
-      longitude: "2.3413998740919526",
-      latitude: "48.868865890558624",
+      longitude: "2.34136",
+      latitude: "48.58624",
       attestationScore: "33",
       timestamp: 1679814496, // Replace with actual Unix timestamp
     };
+    console.log("🚀 | handleCreateOrder | newOrder:", newOrder);
 
     $orders.push(newOrder);
+    orders.set($orders);
   }
 
   onMount(() => {
