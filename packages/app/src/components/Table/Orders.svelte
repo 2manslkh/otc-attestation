@@ -16,7 +16,7 @@
   import { onMount } from "svelte";
   import { getAddress } from "viem";
   const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e"; // Sepolia v0.26
-
+  import { orders } from "../../stores";
   // Initialize the sdk with the address of the EAS Schema contract address
   const eas = new EAS(EASContractAddress);
 
@@ -28,34 +28,34 @@
     longitude: string;
     latitude: string;
     timestamp: number;
-    attestationScore?: number;
+    attestationScore?: string;
     proof?: string;
   };
 
   // Sample orders data (replace this with your actual data)
-  const orders = [
-    {
-      assetAAmount: "1",
-      assetAType: "BTC",
-      assetBAmount: "42069",
-      assetBType: "EUR",
-      longitude: "48.869135152711614",
-      latitude: "2.341314433508059",
-      attestationScore: "25",
-      timestamp: 1679814496, // Replace with actual Unix timestamp
-    },
-    {
-      assetAAmount: "5000",
-      assetAType: "USDT",
-      assetBAmount: "5000",
-      assetBType: "EUR",
-      longitude: "48.89036242982921",
-      latitude: "2.3551452797698107",
-      attestationScore: "25",
-      timestamp: 1679822200, // Replace with actual Unix timestamp
-    },
-    // Add more orders as needed
-  ];
+  //   const orders = [
+  //     {
+  //       assetAAmount: "1",
+  //       assetAType: "BTC",
+  //       assetBAmount: "42069",
+  //       assetBType: "EUR",
+  //       longitude: "48.869135152711614",
+  //       latitude: "2.341314433508059",
+  //       attestationScore: "25",
+  //       timestamp: 1679814496, // Replace with actual Unix timestamp
+  //     },
+  //     {
+  //       assetAAmount: "5000",
+  //       assetAType: "USDT",
+  //       assetBAmount: "5000",
+  //       assetBType: "EUR",
+  //       longitude: "48.89036242982921",
+  //       latitude: "2.3551452797698107",
+  //       attestationScore: "25",
+  //       timestamp: 1679822200, // Replace with actual Unix timestamp
+  //     },
+  //     // Add more orders as needed
+  //   ];
 
   function getGoogleMapsLink(latitude: number, longitude: number): string {
     const link = `https://www.google.com/maps?q=${latitude},${longitude}`;
@@ -172,7 +172,7 @@
     </tr>
   </thead>
   <tbody>
-    {#each orders as order}
+    {#each $orders as order}
       <tr>
         <td>{order.assetAAmount}</td>
         <td>{order.assetAType}</td>
