@@ -14,3 +14,8 @@ export const signature = writable<string>("");
 export const typedSignature = writable<string>("");
 
 export const input = writable<string>("");
+
+export const assetAType = writable<string>("");
+export const assetBType = writable<string>("");
+export const assetAAmount = writable<string>("");
+export const assetBAmount = writable<string>("");

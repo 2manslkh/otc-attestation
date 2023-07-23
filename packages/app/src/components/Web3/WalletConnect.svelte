@@ -35,7 +35,7 @@
         defaultChain: sepolia,
         themeVariables: {
           "--w3m-font-family": "Roboto, sans-serif",
-          "--w3m-accent-color": "#FC0FC0",
+          "--w3m-accent-color": "#000000",
           "--w3m-background-color": "rgb(39, 42, 42)",
         },
       },

@@ -29,3 +29,7 @@
 ### Taiko
 
 - [Receive Ether on Taiko](https://l2faucet.hackathon.taiko.xyz/)
+
+### EAS
+
+https://sepolia.easscan.org/schema/view/0x2fc0e929c1ec681c003c858c7a874cbccc3db5bad965a3e5df86a2916d762f26
