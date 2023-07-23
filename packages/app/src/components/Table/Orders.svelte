@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getConfig } from "@wagmi/core";
+  import { getAccount, getConfig } from "@wagmi/core";
   import Button from "../Button/Button.svelte";
 
   import { providers } from "ethers";
@@ -14,6 +14,7 @@
   } from "@ethereum-attestation-service/eas-sdk";
   import type { Signer } from "ethers";
   import { onMount } from "svelte";
+  import { getAddress } from "viem";
   const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e"; // Sepolia v0.26
 
   // Initialize the sdk with the address of the EAS Schema contract address
@@ -129,6 +130,7 @@
     // );
 
     // ONCHAIN
+
     const schemaUID = "0x2fc0e929c1ec681c003c858c7a874cbccc3db5bad965a3e5df86a2916d762f26";
 
     const tx = await eas.attest({

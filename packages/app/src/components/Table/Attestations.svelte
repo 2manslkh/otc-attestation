@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { getAttestations } from "./query";
   import { writable } from "svelte/store";
+  import { providers } from "ethers";
 
   type AttestationDetails = {
     asset_a_amount: string;
@@ -44,8 +45,12 @@
   }
 
   onMount(async () => {
-    $attestations = (await getAttestations("0xA63dDdB69E6e470Bf3d236B434EF80a213B998A7"))?.data
-      .attestations;
+    // @ts-ignore
+    const provider = new providers.Web3Provider(window.ethereum);
+    const [address] = await provider.listAccounts();
+    console.log("🚀 | onMount | address:", address);
+
+    $attestations = (await getAttestations(address))?.data.attestations;
     console.log("🚀 | onMount | attestations:", $attestations);
   });
 </script>

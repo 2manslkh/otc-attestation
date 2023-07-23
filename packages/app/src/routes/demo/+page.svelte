@@ -97,8 +97,6 @@
   }
 
   async function handleVerifySismoProof() {
-    console.log("proove");
-
     try {
       const data = await sismoConnect.getResponse();
       console.log("🚀 | handleVerifySismoProof | data:", data);

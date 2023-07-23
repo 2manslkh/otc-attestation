@@ -1,35 +1,20 @@
-# Hackathon
+# OTC Attestation
 
-## Stack
+Trade Cryptocurrencies with Confidence - Introducing the Crypto OTC Attestation Protocol
+Welcome to the Future of OTC Cryptocurrency Trading
 
-1. Hardhat
-2. Svelte + wagmi-core
+Are you tired of facing challenges and uncertainties while trading cryptocurrencies over-the-counter (OTC)? Do you wish for a secure and transparent solution to execute OTC trades with confidence, regardless of your location? Look no further! The Crypto OTC Attestation Protocol is here to revolutionize the way you trade digital assets.
 
-## Installation
+## Why Choose the Crypto OTC Attestation Protocol?
 
-1. Prerequisite
-   1. Install `pnpm`:
-   2. Use node 16
-   Using npm: `npm install -g pnpm`
-   3. Others: <https://pnpm.io/installation>
-2. `pnpm i`
-3. Set web3modal project id in `packages/app/.env` ([obtain a project id for web3modal](https://cloud.walletconnect.com/sign-in))
+1. Trustworthy Trading, Anywhere in the World
 
-## Setup
+With our innovative protocol, you can trade cryptocurrencies securely and confidently, no matter where you are in the world. Say goodbye to worries about the legitimacy of assets or the credibility of your trading partner. Our cutting-edge technology ensures every OTC transaction is attested and verified, empowering you to trade with peace of mind.
 
-1. Start the local chain `pnpm node`
-2. Start the web app `pnpm web`
+2. Effortless Proximity Trading
 
-## Faucet links
+Connect with OTC trading partners in your local area effortlessly. Our protocol allows you to find trustworthy traders near you, making it easier than ever to establish face-to-face connections. Experience the convenience of proximity trading and explore exciting opportunities right within your neighborhood.
 
-### Sepolia
-
-- [Receive Ether on Sepolia](https://sepolia-faucet.pk910.de/)
-
-### Taiko
-
-- [Receive Ether on Taiko](https://l2faucet.hackathon.taiko.xyz/)
-
-### EAS
+### EAS Schema
 
 https://sepolia.easscan.org/schema/view/0x2fc0e929c1ec681c003c858c7a874cbccc3db5bad965a3e5df86a2916d762f26
