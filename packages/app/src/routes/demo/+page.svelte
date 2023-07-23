@@ -153,7 +153,7 @@
 
   <br />
   Attestation Score
-  <AttestationScore score="35" />
+  <AttestationScore score={35} />
 </VerticalStack>
 
 <style lang="scss">
